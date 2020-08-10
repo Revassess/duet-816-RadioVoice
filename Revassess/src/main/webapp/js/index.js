@@ -10,10 +10,10 @@
 window.addEventListener('load',callFlashcardApi);
 
 let resp = null;
-let cardID = document.querySelector('#cardID');
-let cardQuestion = document.querySelector('#cardQstn');
-let cardAnswer = document.querySelector('#cardAns');
-let cardCategory = document.querySelector('#cardCat');
+let cardID = document.getElementById('cardId');
+let cardQuestion = document.getElementById('cardQstn');
+let cardAnswer = document.getElementById('cardAns');
+let cardCategory = document.getElementById('cardCat');
 
 document.addEventListener('DOMContentLoaded', () => {
     loadFlashcard();
@@ -43,25 +43,44 @@ function showFlashcard(){
         return;
     }
 
-    const results = resp.results;
-    results.forEach((card) => {
+    const results = resp[0];
 
-        const id = document.createElement('p');
-        id.innerText = card.id;
-        cardID.appendChild(id);
+    const id = document.createElement('p');
+    id.innerText = results.id;
 
-        const question = document.createElement('p');
-        question.innerText = card.question;
-        cardQuestion.appendChild(question);
+    const question = document.createElement('p');
+    question.innerText = results.question;
 
-        const answer = document.createElement('p');
-        answer.innerText = card.answer;
-        cardAnswer.appendChild(answer);
+    const answer = document.createElement('p');
+    answer.innerText = results.answer;
 
-        const category = document.createElement('p');
-        category.innerText = card.category;
-        cardCategory.appendChild(question);
-    })
+    const category = document.createElement('p');
+    category.innerText = results[0].category;
+
+    cardID.appendChild(id);
+    cardQuestion.appendChild(question);
+    cardAnswer.appendChild(answer);
+    cardCategory.appendChild(question);
+
+    // results.forEach((card) => {
+    //
+    //     const id = document.createElement('p');
+    //     id.innerText = card.id;
+    //
+    //     const question = document.createElement('p');
+    //     question.innerText = card.question;
+    //
+    //     const answer = document.createElement('p');
+    //     answer.innerText = card.answer;
+    //
+    //     const category = document.createElement('p');
+    //     category.innerText = card.category;
+    //
+    //     cardID.innerHTML
+    //     cardQuestion.appendChild(question);
+    //     cardAnswer.appendChild(answer);
+    //     cardCategory.appendChild(question);
+    // })
 }
 
 //assign the returned json to the resp variable
