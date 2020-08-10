@@ -1,5 +1,8 @@
 package com.revature.exception;
 
-public class ResourcePersistenceException {
+public class ResourcePersistenceException extends Exception{
+    public ResourcePersistenceException(){
+        super();
+    }
 
 }
