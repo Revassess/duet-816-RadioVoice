@@ -1,5 +1,6 @@
 package com.revature.config;
 
+import javassist.bytecode.analysis.Type;
 import org.postgresql.Driver;
 
 import java.sql.*;
@@ -49,21 +50,14 @@ public class ConnectionUtil {
 		long returnLong = 0;
 
 		try {
-			String SQL = "SELECT Abs(?) AS AbsNum;";
+			String SQL = "{?= call ABS(?)}";
 			conn = connect();
 			cstmt = conn.prepareCall (SQL);
 
-			cstmt.setLong(1, value);
-			ResultSet rs = cstmt.executeQuery();
-
-			while(rs.next()) {
-				try{
-					returnLong = rs.getLong("AbsNum");
-					return returnLong;
-				} catch (SQLException sqlException){
-					sqlException.printStackTrace();
-				}
-			}
+			cstmt.setLong(2, value);
+			cstmt.registerOutParameter(1, Types.BIGINT);
+			cstmt.execute();
+			returnLong = cstmt.getLong(1);
 		}
 		catch (SQLException e) {
 			System.out.println(e);
